@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FlightsThunk, selectFlightsSlice } from '../../store/features/FlightsSlice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { styled } from '@mui/material/styles';
-import { Grid, Paper, Box, Pagination, Alert } from '@mui/material';
+import { Grid, Paper, Box, Pagination, Alert, CircularProgress } from '@mui/material';
 
 import { IFlight } from '../../interface/flights';
 import { CardFlight, Header } from '../../components';
@@ -54,7 +54,11 @@ export const MainPage = () => {
          <Box sx={{ flexGrow: 1}}>
             <Grid container spacing={2}>
                {noData}
-               {pagRes.currentData().map((item:IFlight) => {  
+               {status === 'loading'  ? (
+                  <Grid item lg={12} md={12} sm={12} xs={12}>
+                     <CircularProgress/>
+                  </Grid> 
+               ) : pagRes.currentData().map((item:IFlight) => {  
                      return <Grid item key={item.id} lg={4} md={4} sm={6} xs={12}>
                         <Item>
                            <CardFlight 
